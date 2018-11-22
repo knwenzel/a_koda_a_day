@@ -1,25 +1,21 @@
-from fbchat import Client
-from fbchat.models import *
-from configparser import SafeConfigParser
-#Parse config file
-parser = SafeConfigParser()
+from twilio.rest import Client
+import json
 
-#Change with your own directory
-parser.read('./config.ini')
-#Get fb_cred
-email = parser.get('fb_cred', 'EMAIL')
-password = parser.get('fb_cred', 'PASSWORD')
 
-def send_message(message):
-    client = Client(email, password)
-    client.send(Message(text=message), thread_id=client.uid, thread_type=ThreadType.USER)
-    client.logout()
+with open("config.json","r") as f: 
+    config = json.load(f)
+print (config)
 
-def send_image(message, image_path):
-    client = Client(email, password)
-    client.sendLocalImage(image_path, message=Message(text=message), thread_id=thread_id, thread_type=thread_type)
-    client.logout()
+# Your Account Sid and Auth Token from twilio.com/console
+account_sid = config["twilio_sid"]
+auth_token = config["twilio_auth_token"]
+client = Client(account_sid, auth_token)
 
-#send_image("GOOD MORNING!", 'path/to/image')
-send_message("GOOD MORNING!")
+message = client.messages \
+    .create(
+         body ='Heres the pooper',
+         from_= config["twilio_from_phone"],
+         to = config["twilio_to_phone"]
+     )
 
+print(message.sid)
