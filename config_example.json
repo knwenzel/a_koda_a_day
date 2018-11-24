@@ -3,5 +3,6 @@
     "twilio_sid": "yours", 
     "twilio_auth_token": "yours",
     "twilio_to_phone": "+yours",
-    "twilio_from_phone": "+your twilio phone"
+    "twilio_from_phone": "+your twilio phone",
+    "number_list": ["phone number #1", "phone numer #2"]
 }
